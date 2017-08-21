@@ -1,5 +1,7 @@
 package com.inferno.projectx;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 /**
@@ -9,7 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 public class BaseActivity extends AppCompatActivity implements ActivityCallback,FragmentCallback {
 
     @Override
-    public void startActivity() {
+    public void startActivity(Class<? extends AppCompatActivity> activity, Bundle extras, int requestCode) {
+
+        startActivityForResult(new Intent(this,activity.getClass()).putExtras(extras),requestCode);
 
     }
 

@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 
 import com.inferno.projectx.BaseActivity;
 import com.inferno.projectx.R;
+import com.inferno.projectx.contracts.ContractorList;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -40,7 +41,7 @@ public class DashboardActivity extends BaseActivity {
         contract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(ContractorList.class,null,100);
             }
         });
         materials.setOnClickListener(new View.OnClickListener() {

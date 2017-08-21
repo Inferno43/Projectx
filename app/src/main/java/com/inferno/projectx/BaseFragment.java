@@ -2,7 +2,9 @@ package com.inferno.projectx;
 
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 
 /**
  * Created by saravana.subramanian on 8/21/17.
@@ -20,8 +22,8 @@ public class BaseFragment extends Fragment implements ActivityCallback,FragmentC
     }
 
     @Override
-    public void startActivity() {
-        activityCallback.startActivity();
+    public void startActivity(Class<? extends AppCompatActivity> activity, Bundle extras, int requestCode) {
+        activityCallback.startActivity(activity,extras,requestCode);
     }
 
     @Override
