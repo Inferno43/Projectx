@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Projectx</string>
+    <string name="title_activity_contractor_list">ContractorList</string>
 </resources>
