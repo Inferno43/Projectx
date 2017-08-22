@@ -23,9 +23,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".contracts.ContractorList"
+            android:name=".contractors.ContractorList"
             android:label="@string/title_activity_contractor_list"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".contractors.AddContractor"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".workers.WorkerList"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".workers.AddWorker" />
+        <activity android:name=".materials.MaterialList"></activity>
     </application>
 
 </manifest>

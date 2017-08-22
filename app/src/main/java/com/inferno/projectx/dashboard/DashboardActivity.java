@@ -7,7 +7,9 @@ import android.widget.LinearLayout;
 
 import com.inferno.projectx.BaseActivity;
 import com.inferno.projectx.R;
-import com.inferno.projectx.contracts.ContractorList;
+import com.inferno.projectx.contractors.ContractorList;
+import com.inferno.projectx.toolbox.AppConstants;
+import com.inferno.projectx.workers.WorkerList;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -41,7 +43,7 @@ public class DashboardActivity extends BaseActivity {
         contract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(ContractorList.class,null,100);
+                startActivity(ContractorList.class,null, AppConstants.VIEW_CONTRACT_LIST);
             }
         });
         materials.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +55,7 @@ public class DashboardActivity extends BaseActivity {
         worker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(WorkerList.class,null, AppConstants.VIEW_WORKER_LIST);
             }
         });
         report.setOnClickListener(new View.OnClickListener() {
@@ -63,13 +65,13 @@ public class DashboardActivity extends BaseActivity {
             }
         });
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
-
-        // Clear the realm from last time
-        Realm.deleteRealm(realmConfiguration);
-
-        // Create a new empty instance of Realm
         realm = Realm.getInstance(realmConfiguration);
-
+//        realm.executeTransaction(new Realm.Transaction() {
+//            @Override
+//            public void execute(Realm realm) {
+//                realm.deleteAll();
+//            }
+//        });
 
 
 

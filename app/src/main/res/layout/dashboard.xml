@@ -15,9 +15,10 @@
         android:layout_height="wrap_content"
         android:minHeight="100dp"
         android:minWidth="100dp"
-        android:background="@drawable/border"
+        android:background="@drawable/view_bg"
         android:padding="@dimen/padding_4dp"
         android:layout_margin="@dimen/margin_24"
+        android:elevation="@dimen/card_elevation_6dp"
         android:gravity="center">
 
         <ImageView
@@ -44,10 +45,11 @@
         android:layout_height="wrap_content"
         android:minHeight="100dp"
         android:minWidth="100dp"
-        android:background="@drawable/border"
+        android:background="@drawable/view_bg"
         android:padding="@dimen/padding_4dp"
         android:layout_margin="@dimen/margin_24"
-        android:layout_toRightOf="@+id/add_panel"
+        android:layout_toEndOf="@+id/add_panel"
+        android:elevation="@dimen/card_elevation_6dp"
         android:gravity="center">
 
         <ImageView
@@ -75,10 +77,11 @@
         android:layout_height="wrap_content"
         android:minHeight="100dp"
         android:minWidth="100dp"
-        android:background="@drawable/border"
+        android:background="@drawable/view_bg"
         android:padding="@dimen/padding_4dp"
         android:layout_margin="@dimen/margin_24"
         android:layout_below="@+id/add_panel"
+        android:elevation="@dimen/card_elevation_6dp"
         android:gravity="center">
 
         <ImageView
@@ -107,11 +110,12 @@
         android:layout_height="wrap_content"
         android:minHeight="100dp"
         android:minWidth="100dp"
-        android:background="@drawable/border"
+        android:background="@drawable/view_bg"
         android:padding="@dimen/padding_4dp"
         android:layout_margin="@dimen/margin_24"
         android:layout_below="@+id/contract_panel"
         android:layout_toRightOf="@+id/material_panel"
+        android:elevation="@dimen/card_elevation_6dp"
         android:gravity="center">
 
         <ImageView
@@ -139,10 +143,11 @@
         android:layout_height="wrap_content"
         android:minHeight="100dp"
         android:minWidth="100dp"
-        android:background="@drawable/border"
+        android:background="@drawable/view_bg"
         android:padding="@dimen/padding_4dp"
         android:layout_margin="@dimen/margin_24"
         android:layout_below="@+id/material_panel"
+        android:elevation="@dimen/card_elevation_6dp"
         android:gravity="center">
 
         <ImageView

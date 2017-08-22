@@ -1,4 +1,4 @@
-package com.inferno.projectx.contracts;
+package com.inferno.projectx.workers;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
@@ -11,25 +11,22 @@ import android.widget.TextView;
 
 import com.inferno.projectx.OnclickListener;
 import com.inferno.projectx.R;
-import com.inferno.projectx.model.ContractorModel;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+import com.inferno.projectx.model.WorkerModel;
 
 import io.realm.RealmList;
 
 /**
- * Created by saravana.subramanian on 8/21/17.
+ * Created by saravana.subramanian on 8/22/17.
  */
 
-public class ContractAdapter  extends RecyclerView.Adapter<ContractAdapter.ViewHolder> {
+public class WorkerAdapter extends RecyclerView.Adapter<WorkerAdapter.ViewHolder> {
 
-    private RealmList<ContractorModel> contractorList;
+    private RealmList<WorkerModel> workerList;
     private Context context;
     OnclickListener onClickListener;
 
-    public ContractAdapter(Context context, RealmList<ContractorModel>  contractorList, OnclickListener onClickListener) {
-        this.contractorList = contractorList;
+    public WorkerAdapter(Context context, RealmList<WorkerModel>  workerList, OnclickListener onClickListener) {
+        this.workerList = workerList;
         this.context = context;
         this.onClickListener = onClickListener;
     }
@@ -40,31 +37,31 @@ public class ContractAdapter  extends RecyclerView.Adapter<ContractAdapter.ViewH
         private CardView mItemContainer;
         private TextView name;
         private ImageView image;
-        private TextView description;
+        private TextView address;
 
         private ViewHolder(View itemView) {
             super(itemView);
 
             mItemContainer = (CardView) itemView.findViewById(R.id.item_container);
             name = (TextView) itemView.findViewById(R.id.name);
-            description = (TextView) itemView.findViewById(R.id.description);
+            address = (TextView) itemView.findViewById(R.id.address);
             image = (ImageView)itemView.findViewById(R.id.image);
         }
     }
 
     @Override
-    public ContractAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.contractor_item, parent, false);
-        return new ContractAdapter.ViewHolder(v);
+    public WorkerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.worker_list_item, parent, false);
+        return new WorkerAdapter.ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(final ContractAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final WorkerAdapter.ViewHolder holder, final int position) {
 
-        if(null != contractorList){
-                holder.name.setText(contractorList.get(position).getName());
-                holder.description.setText(contractorList.get(position).getDescription());
-                holder.image.setImageDrawable(null);
+        if(null != workerList){
+            holder.name.setText(workerList.get(position).getWorkerName());
+            holder.address.setText(workerList.get(position).getWorkerAddress());
+            holder.image.setImageDrawable(null);
         }else{
             //
         }
@@ -80,8 +77,8 @@ public class ContractAdapter  extends RecyclerView.Adapter<ContractAdapter.ViewH
 
     @Override
     public int getItemCount() {
-        if(null != contractorList)
-            return contractorList.size();
+        if(null != workerList)
+            return workerList.size();
         else
             return 0;
 

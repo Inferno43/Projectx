@@ -1,6 +1,7 @@
 package com.inferno.projectx.model;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by saravana.subramanian on 8/21/17.
@@ -8,41 +9,62 @@ import io.realm.RealmObject;
 
 public class ContractorModel extends RealmObject {
 
-    private int id;
-    private String name;
-    private String description;
-    private String imageUrl;
+    @PrimaryKey
+    private int nid;
+    private String contractorName;
+    private String contractorPhone;
+    private String contractorAddress;
+    private String contractorImageURL;
 
 
-    public int getId() {
-        return id;
+    public ContractorModel(int nid, String contractorName, String contractorPhone, String contractorAddress, String contractorImageURL) {
+        this.nid = nid;
+        this.contractorName = contractorName;
+        this.contractorPhone = contractorPhone;
+        this.contractorAddress = contractorAddress;
+        this.contractorImageURL = contractorImageURL;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public ContractorModel() {
     }
 
-    public String getName() {
-        return name;
+    public int getNid() {
+        return nid;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNid(int nid) {
+        this.nid = nid;
     }
 
-    public String getDescription() {
-        return description;
+    public String getContractorName() {
+        return contractorName;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setContractorName(String contractorName) {
+        this.contractorName = contractorName;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getContractorPhone() {
+        return contractorPhone;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setContractorPhone(String contractorPhone) {
+        this.contractorPhone = contractorPhone;
+    }
+
+    public String getContractorAddress() {
+        return contractorAddress;
+    }
+
+    public void setContractorAddress(String contractorAddress) {
+        this.contractorAddress = contractorAddress;
+    }
+
+    public String getContractorImageURL() {
+        return contractorImageURL;
+    }
+
+    public void setContractorImageURL(String contractorImageURL) {
+        this.contractorImageURL = contractorImageURL;
     }
 }

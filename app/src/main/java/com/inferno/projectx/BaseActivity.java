@@ -13,7 +13,9 @@ public class BaseActivity extends AppCompatActivity implements ActivityCallback,
     @Override
     public void startActivity(Class<? extends AppCompatActivity> activity, Bundle extras, int requestCode) {
 
-        startActivityForResult(new Intent(this,activity.getClass()).putExtras(extras),requestCode);
+        Intent intent = new Intent(this,activity);
+        if(extras!=null)intent.putExtras(extras);
+        startActivityForResult(intent,requestCode);
 
     }
 
