@@ -27,7 +27,7 @@ public class WorkerList extends BaseActivity {
 
     private Context context;
     private Realm realm;
-    private RealmList<WorkerModel> workerList;
+    //private RealmList<WorkerModel> workerList;
     private RecyclerView workerListView;
     private RecyclerView.LayoutManager mLayoutManager;
     private WorkerAdapter mAdapter;
@@ -46,7 +46,7 @@ public class WorkerList extends BaseActivity {
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
         realm = Realm.getInstance(realmConfiguration);
 
-        Log.i("WorkerModel",""+realm.where(WorkerModel.class).count());
+        //Log.i("WorkerModel",""+realm.where(WorkerModel.class).count());
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -67,19 +67,19 @@ public class WorkerList extends BaseActivity {
     void showList(){
         try{
             if(!realm.isEmpty()){
-                workerList = new RealmList<>();
-                workerList.addAll(realm.where(WorkerModel.class).findAll());
-                mAdapter = new WorkerAdapter(context, workerList, new OnclickListener() {
-                    @Override
-                    public void onClick(int position) {
-
-                    }
-                });
-
-                for(WorkerModel workerModel:workerList){
-                    Log.i("WorkerModel",workerModel.toString());//test log
-                }
-                workerListView.setAdapter(mAdapter);
+//                workerList = new RealmList<>();
+//                workerList.addAll(realm.where(WorkerModel.class).findAll());
+//                mAdapter = new WorkerAdapter(context, workerList, new OnclickListener() {
+//                    @Override
+//                    public void onClick(int position) {
+//
+//                    }
+//                });
+//
+//                for(WorkerModel workerModel:workerList){
+//                    Log.i("WorkerModel",workerModel.toString());//test log
+//                }
+//                workerListView.setAdapter(mAdapter);
             }
 
         }catch (Exception e){

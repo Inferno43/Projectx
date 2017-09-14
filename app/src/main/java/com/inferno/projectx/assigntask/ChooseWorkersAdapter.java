@@ -1,6 +1,7 @@
-package com.inferno.projectx.workers;
+package com.inferno.projectx.assigntask;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,28 +10,36 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.inferno.projectx.ChooseItem;
 import com.inferno.projectx.OnclickListener;
 import com.inferno.projectx.R;
 import com.inferno.projectx.model.WorkerModel;
+import com.inferno.projectx.workers.WorkerAdapter;
 
 import java.util.ArrayList;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import io.realm.RealmList;
 
 /**
- * Created by saravana.subramanian on 8/22/17.
+ * Created by saravana.subramanian on 9/6/17.
  */
 
-public class WorkerAdapter extends RecyclerView.Adapter<WorkerAdapter.ViewHolder> {
+public class ChooseWorkersAdapter  extends RecyclerView.Adapter<ChooseWorkersAdapter.ViewHolder> {
 
     private ArrayList<WorkerModel> workerList;
     private Context context;
-    OnclickListener onClickListener;
+    ChooseItem onClickListener;
+    private Realm realm;
 
-    public WorkerAdapter(Context context, ArrayList<WorkerModel>  workerList, OnclickListener onClickListener) {
+    public ChooseWorkersAdapter(Context context, ArrayList<WorkerModel>  workerList, ChooseItem onClickListener) {
         this.workerList = workerList;
         this.context = context;
         this.onClickListener = onClickListener;
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
+        realm = Realm.getInstance(realmConfiguration);
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -52,13 +61,13 @@ public class WorkerAdapter extends RecyclerView.Adapter<WorkerAdapter.ViewHolder
     }
 
     @Override
-    public WorkerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ChooseWorkersAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.worker_list_item, parent, false);
-        return new WorkerAdapter.ViewHolder(v);
+        return new ChooseWorkersAdapter.ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(final WorkerAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ChooseWorkersAdapter.ViewHolder holder, final int position) {
 
         if(null != workerList){
             holder.name.setText(workerList.get(position).getWorkerName());
@@ -70,7 +79,11 @@ public class WorkerAdapter extends RecyclerView.Adapter<WorkerAdapter.ViewHolder
         holder.mItemContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickListener.onClick(position);
+
+            workerList.get(position).setWorkerSelected(!workerList.get(position).isWorkerSelected());
+            holder.itemView.setBackgroundColor(workerList.get(position).isWorkerSelected() ? Color.YELLOW : Color.WHITE);
+
+            onClickListener.onItemClicked(position,workerList.get(position).isWorkerSelected());
             }
         });
 

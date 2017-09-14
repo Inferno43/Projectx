@@ -23,7 +23,7 @@ public class ContractorList extends BaseActivity {
 
     private Context context;
     private Realm realm;
-    private RealmList<ContractorModel> contractorList;
+    //private RealmList<ContractorModel> contractorList;
     private RecyclerView contractorListView;
     private RecyclerView.LayoutManager mLayoutManager;
     private ContractAdapter mAdapter;
@@ -42,7 +42,7 @@ public class ContractorList extends BaseActivity {
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
         realm = Realm.getInstance(realmConfiguration);
 
-        Log.i("ContractorModel",""+realm.where(ContractorModel.class).count());
+       // Log.i("ContractorModel",""+realm.where(ContractorModel.class).count());
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -63,7 +63,7 @@ public class ContractorList extends BaseActivity {
     void showList(){
         try{
             if(!realm.isEmpty()){
-                contractorList = new RealmList<>();
+                /*contractorList = new RealmList<>();
                 contractorList.addAll(realm.where(ContractorModel.class).findAll());
                 mAdapter = new ContractAdapter(context, contractorList, new OnclickListener() {
                     @Override
@@ -75,7 +75,7 @@ public class ContractorList extends BaseActivity {
                 for(ContractorModel contractorModel:contractorList){
                     Log.i("contractorModel",contractorModel.toString());//test log
                 }
-                contractorListView.setAdapter(mAdapter);
+                contractorListView.setAdapter(mAdapter);*/
             }
 
         }catch (Exception e){

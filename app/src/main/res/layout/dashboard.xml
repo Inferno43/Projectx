@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_gravity="bottom"
-            android:text="Add"
+            android:text="Assign"
             android:textSize="@dimen/text_default"/>
 
     </LinearLayout>

@@ -13,19 +13,21 @@ import com.inferno.projectx.OnclickListener;
 import com.inferno.projectx.R;
 import com.inferno.projectx.model.ContractorModel;
 
+import java.util.ArrayList;
+
 import io.realm.RealmList;
 
 /**
  * Created by saravana.subramanian on 8/21/17.
  */
 
-public class ContractAdapter  extends RecyclerView.Adapter<ContractAdapter.ViewHolder> {
+public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHolder> {
 
-    private RealmList<ContractorModel> contractorList;
+    private ArrayList<ContractorModel> contractorList;
     private Context context;
     OnclickListener onClickListener;
 
-    public ContractAdapter(Context context, RealmList<ContractorModel>  contractorList, OnclickListener onClickListener) {
+    public ContractAdapter(Context context, ArrayList<ContractorModel>  contractorList, OnclickListener onClickListener) {
         this.contractorList = contractorList;
         this.context = context;
         this.onClickListener = onClickListener;

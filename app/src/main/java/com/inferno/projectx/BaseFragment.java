@@ -4,6 +4,7 @@ package com.inferno.projectx;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
 /**
@@ -27,7 +28,7 @@ public class BaseFragment extends Fragment implements ActivityCallback,FragmentC
     }
 
     @Override
-    public void startFrgament() {
-        fragmentCallback.startFrgament();
+    public void startFrgament(FragmentManager fragmentManager, Fragment fragment, boolean addToBackstack, Bundle args) {
+        fragmentCallback.startFrgament(fragmentManager,fragment,addToBackstack,args);
     }
 }

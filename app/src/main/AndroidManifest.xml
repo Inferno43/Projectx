@@ -33,7 +33,13 @@
             android:name=".workers.WorkerList"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".workers.AddWorker" />
-        <activity android:name=".materials.MaterialList"></activity>
+        <activity
+            android:name=".materials.MaterialList"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".materials.AddMaterial"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".assigntask.AssignTask"></activity>
     </application>
 
 </manifest>

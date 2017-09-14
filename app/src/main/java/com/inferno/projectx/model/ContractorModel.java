@@ -1,5 +1,8 @@
 package com.inferno.projectx.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -7,9 +10,9 @@ import io.realm.annotations.PrimaryKey;
  * Created by saravana.subramanian on 8/21/17.
  */
 
-public class ContractorModel extends RealmObject {
 
-    @PrimaryKey
+public class ContractorModel  implements Parcelable{
+
     private int nid;
     private String contractorName;
     private String contractorPhone;
@@ -25,8 +28,40 @@ public class ContractorModel extends RealmObject {
         this.contractorImageURL = contractorImageURL;
     }
 
-    public ContractorModel() {
+
+    protected ContractorModel(Parcel in) {
+        nid = in.readInt();
+        contractorName = in.readString();
+        contractorPhone = in.readString();
+        contractorAddress = in.readString();
+        contractorImageURL = in.readString();
     }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(nid);
+        dest.writeString(contractorName);
+        dest.writeString(contractorPhone);
+        dest.writeString(contractorAddress);
+        dest.writeString(contractorImageURL);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<ContractorModel> CREATOR = new Creator<ContractorModel>() {
+        @Override
+        public ContractorModel createFromParcel(Parcel in) {
+            return new ContractorModel(in);
+        }
+
+        @Override
+        public ContractorModel[] newArray(int size) {
+            return new ContractorModel[size];
+        }
+    };
 
     public int getNid() {
         return nid;
