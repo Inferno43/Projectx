@@ -15,9 +15,12 @@ public class MaterialModel implements Parcelable {
 
     private int mid;
     private String materialName;
+
+
     private String materialUnit;
     private String materialUnitPrice;
     private String materialPicture;
+    private String selectedUnits;
     private boolean isMaterialSelected;
 
     public MaterialModel() {
@@ -42,12 +45,24 @@ public class MaterialModel implements Parcelable {
     }
 
 
+    public MaterialModel(int mid, String materialName, String materialUnit, String materialUnitPrice, String materialPicture, String selectedUnits, boolean isMaterialSelected) {
+        this.mid = mid;
+        this.materialName = materialName;
+        this.materialUnit = materialUnit;
+        this.materialUnitPrice = materialUnitPrice;
+        this.materialPicture = materialPicture;
+        this.selectedUnits = selectedUnits;
+        this.isMaterialSelected = isMaterialSelected;
+    }
+
+
     protected MaterialModel(Parcel in) {
         mid = in.readInt();
         materialName = in.readString();
         materialUnit = in.readString();
         materialUnitPrice = in.readString();
         materialPicture = in.readString();
+        selectedUnits = in.readString();
         isMaterialSelected = in.readByte() != 0;
     }
 
@@ -58,6 +73,7 @@ public class MaterialModel implements Parcelable {
         dest.writeString(materialUnit);
         dest.writeString(materialUnitPrice);
         dest.writeString(materialPicture);
+        dest.writeString(selectedUnits);
         dest.writeByte((byte) (isMaterialSelected ? 1 : 0));
     }
 
@@ -124,5 +140,13 @@ public class MaterialModel implements Parcelable {
 
     public void setMaterialSelected(boolean materialSelected) {
         isMaterialSelected = materialSelected;
+    }
+
+    public String getSelectedUnits() {
+        return selectedUnits;
+    }
+
+    public void setSelectedUnits(String selectedUnits) {
+        this.selectedUnits = selectedUnits;
     }
 }

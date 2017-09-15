@@ -1,6 +1,7 @@
 package com.inferno.projectx.assigntask;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -53,6 +54,7 @@ public class ChooseWorkers extends BaseFragment {
     private RecyclerView workerListView;
     private RecyclerView.LayoutManager mLayoutManager;
     private ChooseWorkersAdapter mAdapter;
+    private ProgressDialog progressDialog;
     //private RealmList<WorkerModel> selectedWorkers;
 
     Retrofit retrofit;
@@ -71,6 +73,7 @@ public class ChooseWorkers extends BaseFragment {
         rootView = inflater.inflate(R.layout.choose_workers, container, false);
         context = getActivity();
         setHasOptionsMenu(true);
+        progressDialog = new ProgressDialog(context);
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(ServerConstants.SERVER_BASEURL)
@@ -139,6 +142,7 @@ public class ChooseWorkers extends BaseFragment {
     }
 
     void getWrokerList(){
+        progressDialog.show();
         try{
             networkService.getAllResources().enqueue(new Callback<ResponseBody>() {
                 @Override
@@ -164,6 +168,7 @@ public class ChooseWorkers extends BaseFragment {
 
                             });
                             workerListView.setAdapter(mAdapter);
+                            progressDialog.dismiss();
                         }
 
                     } catch (IOException e) {

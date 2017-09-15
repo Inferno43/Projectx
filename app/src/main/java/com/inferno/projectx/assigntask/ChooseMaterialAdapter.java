@@ -1,12 +1,16 @@
 package com.inferno.projectx.assigntask;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,11 +31,16 @@ public class ChooseMaterialAdapter extends RecyclerView.Adapter<ChooseMaterialAd
     private ArrayList<MaterialModel> materialList;
     private Context context;
     ChooseItem onClickListener;
+    OnEditTextChanged onEditTextChanged;
+    public interface OnEditTextChanged {
+        void onTextChanged(int position, String charSeq);
+    }
 
-    public ChooseMaterialAdapter(Context context, ArrayList<MaterialModel>  materialList, ChooseItem onClickListener) {
+    public ChooseMaterialAdapter(Context context, ArrayList<MaterialModel>  materialList, ChooseItem onClickListener,OnEditTextChanged onEditTextChanged) {
         this.materialList = materialList;
         this.context = context;
         this.onClickListener = onClickListener;
+        this.onEditTextChanged = onEditTextChanged;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -42,21 +51,23 @@ public class ChooseMaterialAdapter extends RecyclerView.Adapter<ChooseMaterialAd
         private ImageView image;
         private TextView units;
         private TextView price;
+        private EditText unitsSelected;
 
         private ViewHolder(View itemView) {
             super(itemView);
 
             mItemContainer = (CardView) itemView.findViewById(R.id.item_container);
             materialName = (TextView) itemView.findViewById(R.id.name);
-            units = (TextView) itemView.findViewById(R.id.units);
+            units = (TextView) itemView.findViewById(R.id.availableunits);
             price = (TextView) itemView.findViewById(R.id.price);
             image = (ImageView)itemView.findViewById(R.id.image);
+            unitsSelected = (EditText)itemView.findViewById(R.id.units);
         }
     }
 
     @Override
     public ChooseMaterialAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.material_list_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.choose_material_list_item, parent, false);
         return new ChooseMaterialAdapter.ViewHolder(v);
     }
 
@@ -79,6 +90,22 @@ public class ChooseMaterialAdapter extends RecyclerView.Adapter<ChooseMaterialAd
             holder.itemView.setBackgroundColor(materialList.get(position).isMaterialSelected() ? Color.YELLOW : Color.WHITE);
 
             onClickListener.onItemClicked(position,materialList.get(position).isMaterialSelected());
+            }
+        });
+        holder.unitsSelected.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                onEditTextChanged.onTextChanged(position, charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
 

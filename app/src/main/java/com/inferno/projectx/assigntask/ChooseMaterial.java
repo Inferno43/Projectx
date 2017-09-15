@@ -1,9 +1,11 @@
 package com.inferno.projectx.assigntask;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,7 +33,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -47,10 +51,14 @@ public class ChooseMaterial extends BaseFragment {
     private RecyclerView materialListView;
     private RecyclerView.LayoutManager mLayoutManager;
     private ChooseMaterialAdapter mAdapter;
+    private ProgressDialog progressDialog;
 
     Retrofit retrofit;
     NetworkService networkService;
     private ArrayList<MaterialModel> materialArrayList;
+
+    private ContractorModel selectedContractor;
+    private ArrayList<WorkerModel> selectedWorkers;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,6 +76,10 @@ public class ChooseMaterial extends BaseFragment {
         rootView = inflater.inflate(R.layout.choose_material, container, false);
         context = getActivity();
         setHasOptionsMenu(true);
+        progressDialog = new ProgressDialog(context);
+
+        selectedContractor = getArguments().getParcelable(AppConstants.EXTRA_CONTRACTOR);
+        selectedWorkers = getArguments().getParcelableArrayList(AppConstants.EXTRA_WORKER_LIST);
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(ServerConstants.SERVER_BASEURL)
@@ -100,6 +112,24 @@ public class ChooseMaterial extends BaseFragment {
                 extras.putParcelableArrayList(AppConstants.EXTRA_WORKER_LIST,getSelectedMaterials(materialArrayList));
                 extras.putParcelable(AppConstants.EXTRA_CONTRACTOR, (Parcelable) getArguments().get(AppConstants.EXTRA_CONTRACTOR));
                 startFrgament(getFragmentManager(),new ChooseMaterial(),false,extras);*/
+                try{
+                    networkService.getAssignWork(formJson().toString()).enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            if(response.isSuccessful()){
+                                Snackbar.make(rootView,"Work Assigned successfully",Snackbar.LENGTH_LONG).show();
+                                getActivity().finish();
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                            Snackbar.make(rootView,"Error",Snackbar.LENGTH_LONG).show();
+                        }
+                    });
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 break;
 
         }
@@ -108,6 +138,7 @@ public class ChooseMaterial extends BaseFragment {
     }
 
     void getMaterialList(){
+        progressDialog.show();
         try{
             networkService.getAllResources().enqueue(new Callback<ResponseBody>() {
                 @Override
@@ -121,17 +152,23 @@ public class ChooseMaterial extends BaseFragment {
                                 JSONObject materialObject = materials.getJSONObject(i);
                                 materialArrayList.add(new MaterialModel(materialObject.getInt("mid"),materialObject.getString("material_name"),
                                         materialObject.getString("material_unit"), materialObject.getString("material_price"),
-                                        materialObject.getString("picture"),false));
+                                        materialObject.getString("picture"),"0",false));
                             }
                             mAdapter = new ChooseMaterialAdapter(context, materialArrayList, new ChooseItem() {
                                 @Override
                                 public void onItemClicked(int position, boolean isSelected) {
                                     materialArrayList.get(position).setMaterialSelected(isSelected);
-                                    Toast.makeText(context,""+materialArrayList.get(position).getMaterialName(),Toast.LENGTH_LONG).show();
+                                    Toast.makeText(context, "" + materialArrayList.get(position).getMaterialName(), Toast.LENGTH_LONG).show();
                                 }
 
+                            }, new ChooseMaterialAdapter.OnEditTextChanged() {
+                                @Override
+                                public void onTextChanged(int position, String charSeq) {
+                                    materialArrayList.get(position).setSelectedUnits(charSeq);
+                                }
                             });
                             materialListView.setAdapter(mAdapter);
+                            progressDialog.dismiss();
                         }
 
                     } catch (IOException e) {
@@ -158,6 +195,41 @@ public class ChooseMaterial extends BaseFragment {
                 selectedMaterialsList.add(workerModel);
         }
         return  selectedMaterialsList;
+    }
+
+
+    JSONObject formJson(){
+        JSONObject formData = new JSONObject();
+        try {
+            formData.put("cid",selectedContractor.getNid());
+            JSONArray workers = new JSONArray();
+            for(int i=0;i<selectedWorkers.size();i++){
+                workers.put(i,selectedWorkers.get(i).getUid());
+            }
+            JSONArray materials = new JSONArray();
+
+            for(int i=0;i<getSelectedMaterials(materialArrayList).size();i++){
+                JSONObject materialObject = new JSONObject();
+                materialObject.put("id",getSelectedMaterials(materialArrayList).get(i).getMid());
+                materialObject.put("qty",getSelectedMaterials(materialArrayList).get(i).getSelectedUnits());
+                materialObject.put("unit",getSelectedMaterials(materialArrayList).get(i).getMaterialUnit());
+                materials.put(i,materialObject);
+            }
+            formData.put("who",workers);
+            formData.put("material",materials);
+            Calendar c = Calendar.getInstance();
+            System.out.println("Current time => " + c.getTime());
+
+            SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+            String formattedDate = df.format(c.getTime());
+            formData.put("date",formattedDate);
+
+            formData.put("submit","Create new Assigment name");
+            Log.i("json",""+formData);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return formData;
     }
 
 }

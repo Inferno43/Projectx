@@ -1,6 +1,7 @@
 package com.inferno.projectx.assigntask;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -46,6 +47,7 @@ public class ChooseContractor extends BaseFragment {
     private RecyclerView contractorListView;
     private RecyclerView.LayoutManager mLayoutManager;
     private ContractAdapter mAdapter;
+    private ProgressDialog progressDialog;
 
     Retrofit retrofit;
     NetworkService networkService;
@@ -63,6 +65,7 @@ public class ChooseContractor extends BaseFragment {
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.choose_contractor, container, false);
         context = getActivity();
+        progressDialog = new ProgressDialog(context);
         retrofit = new Retrofit.Builder()
                 .baseUrl(ServerConstants.SERVER_BASEURL)
                 .build();
@@ -105,11 +108,13 @@ public class ChooseContractor extends BaseFragment {
     }
 
     void getAllResources(){
+        progressDialog.show();
         try{
             networkService.getAllResources().enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
+
                     JSONObject reponseBody = new JSONObject(response.body().string());
                     if(reponseBody.has("contracts")){
                         JSONArray contractors = reponseBody.getJSONArray("contracts");
@@ -130,6 +135,7 @@ public class ChooseContractor extends BaseFragment {
                             }
                         });
                         contractorListView.setAdapter(mAdapter);
+                        progressDialog.dismiss();
                     }
 
                 } catch (IOException e) {
