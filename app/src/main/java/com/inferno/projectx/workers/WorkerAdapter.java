@@ -9,9 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.inferno.projectx.OnclickListener;
 import com.inferno.projectx.R;
 import com.inferno.projectx.model.WorkerModel;
+import com.inferno.projectx.toolbox.ServerConstants;
 
 import java.util.ArrayList;
 
@@ -63,7 +65,9 @@ public class WorkerAdapter extends RecyclerView.Adapter<WorkerAdapter.ViewHolder
         if(null != workerList){
             holder.name.setText(workerList.get(position).getWorkerName());
             holder.address.setText(workerList.get(position).getWorkerAddress());
-            holder.image.setImageDrawable(null);
+            Glide.with(context)
+                    .load(ServerConstants.SERVER_BASEURL+workerList.get(position).getWorkerImageURL().substring(1))
+                    .into(holder.image);
         }else{
             //
         }

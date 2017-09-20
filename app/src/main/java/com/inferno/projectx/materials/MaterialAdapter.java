@@ -9,9 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.inferno.projectx.OnclickListener;
 import com.inferno.projectx.R;
 import com.inferno.projectx.model.MaterialModel;
+import com.inferno.projectx.toolbox.ServerConstants;
 
 import java.util.ArrayList;
 
@@ -66,7 +68,9 @@ public class MaterialAdapter extends RecyclerView.Adapter<MaterialAdapter.ViewHo
             holder.materialName.setText(materialList.get(position).getMaterialName());
             holder.units.setText(materialList.get(position).getMaterialUnit());
             holder.price.setText(materialList.get(position).getMaterialUnitPrice());
-            holder.image.setImageDrawable(null);
+            Glide.with(context)
+                    .load(ServerConstants.SERVER_BASEURL+materialList.get(position).getMaterialPicture().substring(1))
+                    .into(holder.image);
         }else{
             //
         }

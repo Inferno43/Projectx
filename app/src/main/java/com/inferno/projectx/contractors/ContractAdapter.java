@@ -9,9 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.LazyHeaders;
 import com.inferno.projectx.OnclickListener;
 import com.inferno.projectx.R;
 import com.inferno.projectx.model.ContractorModel;
+import com.inferno.projectx.toolbox.ServerConstants;
 
 import java.util.ArrayList;
 
@@ -63,7 +67,9 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
         if(null != contractorList){
                 holder.name.setText(contractorList.get(position).getContractorName());
                 holder.address.setText(contractorList.get(position).getContractorAddress());
-                holder.image.setImageDrawable(null);
+                Glide.with(context)
+                    .load(ServerConstants.SERVER_BASEURL+contractorList.get(position).getContractorImageURL().substring(1))
+                    .into(holder.image);
         }else{
             //
         }
